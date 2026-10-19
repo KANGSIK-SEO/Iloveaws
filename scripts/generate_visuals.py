@@ -175,7 +175,7 @@ ARCH_HTML = """<!DOCTYPE html>
               <div class="ec2-title">🖥️ EC2: mission-web-server</div>
               <div style="font-size: 13px; color: #94a3b8;">Nginx Web Server &amp; Health Check Engine</div>
               <div class="badge-row">
-                <span class="badge-item">Public IP: 3.34.126.62</span>
+                <span class="badge-item">Public IP: 54.180.1.48</span>
                 <span class="badge-item">Private IP: 10.0.1.15</span>
                 <span class="badge-item">EBS: 10GiB gp3</span>
               </div>
@@ -308,7 +308,7 @@ BROWSER_HTML = """<!DOCTYPE html>
         <div class="dot dot-yellow"></div>
         <div class="dot dot-green"></div>
       </div>
-      <div class="omnibox">http://3.34.126.62</div>
+      <div class="omnibox">http://54.180.1.48</div>
     </div>
     <div class="browser-body">
       <div class="badge">● AWS 서울 리전 (ap-northeast-2) 배포 정상 가동 중 (200 OK)</div>
@@ -384,7 +384,7 @@ TERMINAL_HEALTH_HTML = """<!DOCTYPE html>
 <body>
   <div class="term">
     <div class="term-bar"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
-    <div><span class="prompt">kangsikseo@macbook-pro ~ %</span> <span class="cmd">curl -i http://3.34.126.62/health</span></div>
+    <div><span class="prompt">kangsikseo@macbook-pro ~ %</span> <span class="cmd">curl -i http://54.180.1.48/health</span></div>
     <div class="out">
       HTTP/1.1 <span class="ok">200 OK</span><br/>
       Server: nginx/1.18.0 (Ubuntu)<br/>
@@ -396,12 +396,12 @@ TERMINAL_HEALTH_HTML = """<!DOCTYPE html>
       <span class="ok">OK</span>
     </div>
     <br/>
-    <div><span class="prompt">kangsikseo@macbook-pro ~ %</span> <span class="cmd">ssh -i mission-key.pem ubuntu@3.34.126.62 "curl -sI https://example.com | head -n 1"</span></div>
+    <div><span class="prompt">kangsikseo@macbook-pro ~ %</span> <span class="cmd">ssh -i mission-key.pem ubuntu@54.180.1.48 "curl -sI https://example.com | head -n 1"</span></div>
     <div class="out">
       HTTP/2 <span class="ok">200</span> &nbsp;<span class="highlight">(인스턴스 아웃바운드 인터넷 통신 성공)</span>
     </div>
     <br/>
-    <div><span class="prompt">kangsikseo@macbook-pro ~ %</span> <span class="cmd">ssh -i mission-key.pem ubuntu@3.34.126.62 "curl -sI http://localhost"</span></div>
+    <div><span class="prompt">kangsikseo@macbook-pro ~ %</span> <span class="cmd">ssh -i mission-key.pem ubuntu@54.180.1.48 "curl -sI http://localhost"</span></div>
     <div class="out">
       HTTP/1.1 <span class="ok">200 OK</span> &nbsp;<span class="highlight">(인스턴스 내부 200 응답 확인 완료)</span>
     </div>

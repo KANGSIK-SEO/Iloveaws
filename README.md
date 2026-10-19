@@ -11,7 +11,7 @@ AWS 클라우드 인프라의 핵심 구성 요소인 **VPC 격리 가상 네트
 | 구분 | 제출 규격 | 저장소 내 파일 경로 | 핵심 내용 요약 |
 |---|---|---|---|
 | **1. 아키텍처 다이어그램** | `docs/architecture.(png\|pdf)` | [`docs/architecture.png`](docs/architecture.png)<br>[`docs/architecture.pdf`](docs/architecture.pdf)<br>[`docs/architecture.md`](docs/architecture.md) | VPC(10.0.0.0/16), Public Subnet(10.0.1.0/24), Internet Gateway, Route Table(0.0.0.0/0 &rarr; IGW), EC2(t3.micro), Security Group, IAM 최소권한 및 트래픽 흐름 시각화 |
-| **2. 웹 서비스 외부 접속 증빙** | 방식(A/B) 명시 + 접속 정보 + 스크린샷 1장 이상 | 본 `README.md` 2장 &<br>[`docs/screenshots/01-web-browser.png`](docs/screenshots/01-web-browser.png)<br>[`docs/screenshots/02-health-check.png`](docs/screenshots/02-health-check.png) | **(A) 브라우저 접속** (`http://3.34.126.62`) 및 **(B) 헬스체크 호출** (`GET /health` &rarr; `200 OK` / `"OK"`) 양쪽 모두 검증 완료 |
+| **2. 웹 서비스 외부 접속 증빙** | 방식(A/B) 명시 + 접속 정보 + 스크린샷 1장 이상 | 본 `README.md` 2장 &<br>[`docs/screenshots/01-web-browser.png`](docs/screenshots/01-web-browser.png)<br>[`docs/screenshots/02-health-check.png`](docs/screenshots/02-health-check.png) | **(A) 브라우저 접속** (`http://54.180.1.48`) 및 **(B) 헬스체크 호출** (`GET /health` &rarr; `200 OK` / `"OK"`) 양쪽 모두 검증 완료 |
 | **3. 트러블슈팅 보고서** | `docs/troubleshooting.(md\|pdf)` | [`docs/troubleshooting.md`](docs/troubleshooting.md)<br>[`docs/troubleshooting.pdf`](docs/troubleshooting.pdf) | ① Public Subnet 라우팅 테이블 누락 타임아웃, ② SSH 소스 IP(`/32`) 불일치 타임아웃, ③ 헬스체크 `/health` 404 라우팅 충돌 등 3건의 `증상&rarr;가설&rarr;검증&rarr;조치&rarr;결과&rarr;재발방지` 기록 |
 | **4. 리소스 정리 체크리스트** | `docs/cleanup-checklist.md` + 정리 증빙 캡처 | [`docs/cleanup-checklist.md`](docs/cleanup-checklist.md)<br>[`docs/screenshots/04-cleanup-verified.png`](docs/screenshots/04-cleanup-verified.png) | EC2 Terminated, EBS Volume(10GiB) 삭제, Elastic IP 0건, SG, Route Table, Subnet, IGW, VPC 전 항목 삭제 및 과금 위험 0원 검증 완료 |
 | **5. Docker 컨테이너 배포 (보너스)** | 실행 방식·포트 매핑 명시 + 검증 스크린샷 2장 | [`Dockerfile`](Dockerfile)<br>[`docker-compose.yml`](docker-compose.yml)<br>[`docs/screenshots/03-docker-ps.png`](docs/screenshots/03-docker-ps.png) | EC2 내부에서 Nginx 기반 경량 Alpine 컨테이너(`80:80`) 구동 및 `docker ps`, `curl http://localhost/health` 내부/외부 `200 OK` 검증 |
@@ -42,12 +42,12 @@ AWS 클라우드 인프라의 핵심 구성 요소인 **VPC 격리 가상 네트
 
 - **선택한 검증 방식**: **(A) 브라우저로 `http://<퍼블릭IP>` 접속** 및 **(B) `GET http://<퍼블릭IP>/health` 호출** (두 가지 방식 모두 구현 및 증빙 완료)
 - **접속 정보**:
-  - 퍼블릭 IP 기준: `http://3.34.126.62` / `http://3.34.126.62/health`
+  - 퍼블릭 IP 기준: `http://54.180.1.48` / `http://54.180.1.48/health`
 - **응답 결과**:
   - `GET /` &rarr; `HTTP/1.1 200 OK` (I Love AWS 클라우드 인프라 대시보드 페이지 정상 출력)
   - `GET /health` &rarr; `HTTP/1.1 200 OK` 및 고정 본문 `"OK"` 반환
 
-### (A) 브라우저 외부 접속 결과 화면 (`http://3.34.126.62`)
+### (A) 브라우저 외부 접속 결과 화면 (`http://54.180.1.48`)
 ![Web Browser Verification](docs/screenshots/01-web-browser.png)
 
 ### (B) `GET /health` 헬스체크 호출 및 내부/아웃바운드 통신 검증 화면
@@ -62,7 +62,7 @@ AWS 클라우드 인프라의 핵심 구성 요소인 **VPC 격리 가상 네트
 - **포트 매핑**: `80:80` (호스트 80번 포트 &rarr; 컨테이너 80번 포트)
 - **검증 결과**:
   - 인스턴스 내부 `curl http://localhost/health` &rarr; `HTTP/1.1 200 OK` (`OK`)
-  - 외부 `http://3.34.126.62/health` &rarr; `HTTP/1.1 200 OK` (`OK`)
+  - 외부 `http://54.180.1.48/health` &rarr; `HTTP/1.1 200 OK` (`OK`)
 
 ### Docker 컨테이너 상태 (`docker ps`) 및 내부 헬스체크 검증 화면
 ![Docker PS Verification](docs/screenshots/03-docker-ps.png)
