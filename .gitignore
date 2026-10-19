@@ -1,0 +1,13 @@
+# Private Key Pairs (Never commit AWS credentials or private keys)
+*.pem
+*.key
+.env
+
+# Temporary render artifacts
+.tmp_render/
+*.log
+
+# OS & Editor files
+.DS_Store
+.vscode/
+.idea/

@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    image: iloveaws-web:latest
+    container_name: mission-web-container
+    ports:
+      - "80:80"
+    restart: always
